@@ -50,26 +50,26 @@ class send_email:
 
     def send(self, password):
         # The email creation
-        if self.status == "Not Drafted":
-            data = MIMEMultipart()
-            data['From'] = (self.user)
-            data['Subject'] = (self.subject)
-            data.attach(MIMEText((self.body), 'plain'))
+        # Creating the instance of MIMEMultipart to format the email
+        data = MIMEMultipart()
+        data['From'] = (self.user)
+        data['Subject'] = (self.subject)
+        data.attach(MIMEText((self.body), 'plain'))
 
-            # The attachment part
-            try:
-                if (self.path) != None:
-                    attachment = open((self.path), "rb")
-                    p = MIMEBase('application', 'octet-stream')
-                    p.set_payload((attachment).read())
-                    encoders.encode_base64(p)
-                    p.add_header('Content-Disposition',
-                                 "attachment; filename= %s" % (self.filename))
-                    data.attach(p)
-            except AttributeError:
-                pass
-            (self.msg) = data.as_string()
-
+        # Adding the attachment if a path is given
+        try:
+            if (self.path) != None:
+                attachment = open((self.path), "rb")
+                p = MIMEBase('application', 'octet-stream')
+                p.set_payload((attachment).read())
+                encoders.encode_base64(p)
+                p.add_header('Content-Disposition',
+                             "attachment; filename= %s" % (self.filename))
+                data.attach(p)
+        except AttributeError:
+            pass
+        (self.status) = "Drafted"
+        (self.msg) = data.as_string()
         try:
             # Setting up the server
             server = SMTP("smtp.gmail.com", 587)
@@ -89,11 +89,12 @@ class send_email:
             print("give valid credentials")
 
 if __name__ == "__main__":
-    design = send_email(
+    f = open("text.txt", "r")
+    design = send_email.send_email(
         "swayamgavankar007@gmail.com",
-        ["swayamgavankar007@gmail.com", "swayamgavankar007@gmail.com",],
+        "swayamgavankar007@gmail.com",
         "Test",
-        "Test was successful"
+        f.read()
     )
     # design.create_draft()
     #_path = r"D:\Programming\Python\Python_Scripts\My_Design1_24.05.jpg"
