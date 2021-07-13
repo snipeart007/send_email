@@ -83,12 +83,10 @@ class send_email:
             server.starttls()
             # Loging in
             server.login((self.user), password)
-            print("logged in")
             (message) = self.msg
 
             for rec in self.to:
                 server.sendmail((self.user), rec, message)
-                print("Email has been sent")
 
             server.quit()
             return True
