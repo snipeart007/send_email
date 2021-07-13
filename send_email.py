@@ -46,6 +46,10 @@ class send_email:
             pass
         (self.status) = "Drafted"
         (self.msg) = data.as_string()
+        if self.status == "Drafted":
+            return True
+        else:
+            return False
 
     # Creating the email if not already drafted and sending it using smtplib
 
@@ -87,24 +91,9 @@ class send_email:
                 print("Email has been sent")
 
             server.quit()
+            return True
 
         except:
             print("give valid credentials")
 
-
-if __name__ == "__main__":
-    design = send_email(
-        "swayamgavankar007@gmail.com",
-        [
-            "swayamgavankar007@gmail.com",
-            "swayamgavankar007@gmail.com",
-        ],
-        "Test",
-        "Test was successful",
-    )
-    # design.create_draft()
-    # _path = r"D:\Programming\Python\Python_Scripts\My_Design1_24.05.jpg"
-    # file = "My_Design1_24.05.jpg"
-
-    design.send("swayam2008")
 # Thanks for using my small attempt towards Object-Oriented Programming
