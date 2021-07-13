@@ -18,7 +18,7 @@ class send_email:
         self.msg = msg
         status = "Not Drafted"
         self.status = status
-        if path != None:
+        if path is not None:
             self.path = path
             self.filename = filename
 
@@ -33,7 +33,7 @@ class send_email:
 
         # Adding the attachment if a path is given
         try:
-            if (self.path) != None:
+            if (self.path) is not None:
                 attachment = open((self.path), "rb")
                 p = MIMEBase("application", "octet-stream")
                 p.set_payload((attachment).read())
@@ -63,7 +63,7 @@ class send_email:
 
             # The attachment part
             try:
-                if (self.path) != None:
+                if (self.path) is not None:
                     attachment = open((self.path), "rb")
                     p = MIMEBase("application", "octet-stream")
                     p.set_payload((attachment).read())
