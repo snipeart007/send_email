@@ -27,19 +27,20 @@ class send_email:
     def create_draft(self):
         # Creating the instance of MIMEMultipart to format the email
         data = MIMEMultipart()
-        data['From'] = (self.user)
-        data['Subject'] = (self.subject)
-        data.attach(MIMEText((self.body), 'plain'))
+        data["From"] = self.user
+        data["Subject"] = self.subject
+        data.attach(MIMEText((self.body), "plain"))
 
         # Adding the attachment if a path is given
         try:
             if (self.path) != None:
                 attachment = open((self.path), "rb")
-                p = MIMEBase('application', 'octet-stream')
+                p = MIMEBase("application", "octet-stream")
                 p.set_payload((attachment).read())
                 encoders.encode_base64(p)
-                p.add_header('Content-Disposition',
-                             "attachment; filename= %s" % (self.filename))
+                p.add_header(
+                    "Content-Disposition", "attachment; filename= %s" % (self.filename)
+                )
                 data.attach(p)
         except AttributeError:
             pass
@@ -52,19 +53,21 @@ class send_email:
         # The email creation
         if self.status == "Not Drafted":
             data = MIMEMultipart()
-            data['From'] = (self.user)
-            data['Subject'] = (self.subject)
-            data.attach(MIMEText((self.body), 'plain'))
+            data["From"] = self.user
+            data["Subject"] = self.subject
+            data.attach(MIMEText((self.body), "plain"))
 
             # The attachment part
             try:
                 if (self.path) != None:
                     attachment = open((self.path), "rb")
-                    p = MIMEBase('application', 'octet-stream')
+                    p = MIMEBase("application", "octet-stream")
                     p.set_payload((attachment).read())
                     encoders.encode_base64(p)
-                    p.add_header('Content-Disposition',
-                                 "attachment; filename= %s" % (self.filename))
+                    p.add_header(
+                        "Content-Disposition",
+                        "attachment; filename= %s" % (self.filename),
+                    )
                     data.attach(p)
             except AttributeError:
                 pass
@@ -77,7 +80,7 @@ class send_email:
             # Loging in
             server.login((self.user), password)
             print("logged in")
-            (message) = (self.msg)
+            (message) = self.msg
 
             for rec in self.to:
                 server.sendmail((self.user), rec, message)
@@ -92,13 +95,16 @@ class send_email:
 if __name__ == "__main__":
     design = send_email(
         "swayamgavankar007@gmail.com",
-        ["swayamgavankar007@gmail.com", "swayamgavankar007@gmail.com", ],
+        [
+            "swayamgavankar007@gmail.com",
+            "swayamgavankar007@gmail.com",
+        ],
         "Test",
-        "Test was successful"
+        "Test was successful",
     )
     # design.create_draft()
-    #_path = r"D:\Programming\Python\Python_Scripts\My_Design1_24.05.jpg"
-    #file = "My_Design1_24.05.jpg"
+    # _path = r"D:\Programming\Python\Python_Scripts\My_Design1_24.05.jpg"
+    # file = "My_Design1_24.05.jpg"
 
     design.send("swayam2008")
 # Thanks for using my small attempt towards Object-Oriented Programming
